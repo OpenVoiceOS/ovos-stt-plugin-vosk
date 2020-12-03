@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
-from os.path import join, abspath, dirname
 from setuptools import setup
 
-with open(join(dirname(abspath(__file__)), 'requirements.txt')) as f:
-    requirements = f.readlines()
-
-PLUGIN_ENTRY_POINT = ('vosk_stt_plug = mycroft_stt_plugin_vosk:VoskKaldiSTT',
-                      'vosk_streaming_stt_plug = mycroft_stt_plugin_vosk:VoskKaldiStreamingSTT')
+PLUGIN_ENTRY_POINT = ('vosk_stt_plug = jarbas_stt_plugin_vosk:VoskKaldiSTT',
+                      'vosk_streaming_stt_plug = jarbas_stt_plugin_vosk:VoskKaldiStreamingSTT')
 setup(
-    name='mycroft_stt_plugin_vosk',
-    version='0.1',
+    name='jarbas-stt-plugin-vosk',
+    version='0.1.2',
     description='A vosk stt plugin for mycroft',
-    url='https://github.com/JarbasIberianLanguageResources/mycroft-stt-plugin-vosk',
+    url='https://github.com/JarbasLingua/jarbas-stt-plugin-vosk',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
     license='Apache-2.0',
-    packages=['mycroft_stt_plugin_vosk'],
-    install_requires=requirements,
+    packages=['jarbas_stt_plugin_vosk'],
+    install_requires=["numpy", "vosk"],
     zip_safe=True,
     classifiers=[
         'Development Status :: 3 - Alpha',
