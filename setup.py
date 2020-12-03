@@ -5,7 +5,7 @@ PLUGIN_ENTRY_POINT = ('vosk_stt_plug = jarbas_stt_plugin_vosk:VoskKaldiSTT',
                       'vosk_streaming_stt_plug = jarbas_stt_plugin_vosk:VoskKaldiStreamingSTT')
 setup(
     name='jarbas-stt-plugin-vosk',
-    version='0.1.2',
+    version='0.1.3',
     description='A vosk stt plugin for mycroft',
     url='https://github.com/JarbasLingua/jarbas-stt-plugin-vosk',
     author='JarbasAi',

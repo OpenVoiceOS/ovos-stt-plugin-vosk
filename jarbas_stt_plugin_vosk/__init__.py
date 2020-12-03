@@ -16,12 +16,11 @@ class VoskKaldiSTT(STT):
             LOG.info(
                 "download a model from https://alphacephei.com/vosk/models")
             raise FileNotFoundError
-        self.model = KaldiModel(model_path)
+        self.kaldi = KaldiRecognizer(KaldiModel(model_path), 16000)
 
     def execute(self, audio, language=None):
-        kaldi = KaldiRecognizer(self.model, 16000)
-        kaldi.AcceptWaveform(audio.get_wav_data())
-        res = kaldi.FinalResult()
+        self.kaldi.AcceptWaveform(audio.get_wav_data())
+        res = self.kaldi.FinalResult()
         res = json.loads(res)
         return res["text"]
 
@@ -44,12 +43,17 @@ class VoskKaldiStreamThread(StreamThread):
                 res = self.kaldi.PartialResult()
                 res = json.loads(res)
                 self.text = res["partial"]
-                if self.verbose:
-                    if self.previous_partial != self.text:
-                        LOG.info("Partial Transcription: " + self.text)
-            self.previous_partial = self.text
+        if self.verbose:
+            if self.previous_partial != self.text:
+                LOG.info("Partial Transcription: " + self.text)
+        self.previous_partial = self.text
 
         return self.text
+
+    def finalize(self):
+        if self.previous_partial:
+            self.kaldi.FinalResult()
+            self.previous_partial = ""
 
 
 class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
@@ -60,7 +64,17 @@ class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
 
     def create_streaming_thread(self):
         self.queue = Queue()
-        kaldi = KaldiRecognizer(self.model, 16000)
         return VoskKaldiStreamThread(
-            self.queue, self.lang, kaldi, self.verbose
+            self.queue, self.lang, self.kaldi, self.verbose
         )
+
+    def stream_stop(self):
+        if self.stream is not None:
+            self.queue.put(None)
+            self.stream.finalize()
+            self.stream.join()
+            text = self.stream.text
+            self.stream = None
+            self.queue = None
+            return text
+        return None
