@@ -60,7 +60,7 @@ class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
 
     def __init__(self):
         super().__init__()
-        self.verbose = self.config.get("verbose", True)
+        self.verbose = self.config.get("verbose", False)
 
     def create_streaming_thread(self):
         self.queue = Queue()
@@ -70,11 +70,5 @@ class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
 
     def stream_stop(self):
         if self.stream is not None:
-            self.queue.put(None)
             self.stream.finalize()
-            self.stream.join()
-            text = self.stream.text
-            self.stream = None
-            self.queue = None
-            return text
-        return None
+        return super().stream_stop()
