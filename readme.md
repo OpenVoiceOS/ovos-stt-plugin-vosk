@@ -23,7 +23,7 @@ You need to download a kaldi model, none is included in this package by default
   "stt": {
     "module": "vosk_stt_plug",
     "vosk_stt_plug": {
-        "model": "path/to/model/folder"
+        "model_folder": "path/to/model/folder"
     }
   }
  
@@ -36,11 +36,11 @@ You need to download a kaldi model, none is included in this package by default
   "stt": {
     "module": "vosk_streaming_stt_plug",
     "vosk_streaming_stt_plug": {
-        "model": "path/to/model/folder",
+        "model_folder": "path/to/model/folder",
         "verbose": true
     },
     "vosk_stt_plug": {
-        "model": "path/to/model/folder"
+        "model_folder": "path/to/model/folder"
     }
   }
  
