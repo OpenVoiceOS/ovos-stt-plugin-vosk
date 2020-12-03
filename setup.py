@@ -11,7 +11,7 @@ setup(
     name='mycroft_stt_plugin_vosk',
     version='0.1',
     description='A vosk stt plugin for mycroft',
-    url='https://github.com/OpenJarbas/mycroft-stt-plugin-vosk',
+    url='https://github.com/JarbasIberianLanguageResources/mycroft-stt-plugin-vosk',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
     license='Apache-2.0',

@@ -9,7 +9,7 @@ more info in the [docs](https://mycroft-ai.gitbook.io/docs/mycroft-technologies/
 
 ## Install
 
-`mycroft-pip install git+https://github.com/OpenJarbas/mycroft-stt-plugin-vosk`
+`mycroft-pip install mycroft_stt_plugin_vosk`
 
 You can download official models from [alphacephei](https://alphacephei.com/vosk/models)
 
@@ -48,5 +48,7 @@ You need to download a kaldi model, none is included in this package by default
 
 
 `vosk_stt_plug` - regular STT, transcription happens after recording finishes
+
 `vosk_streaming_stt_plug` - streaming STT, transcription happens real time
+
 `verbose` - print partial transcriptions
