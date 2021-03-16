@@ -3,8 +3,8 @@ import json
 from vosk import Model as KaldiModel, KaldiRecognizer
 from queue import Queue
 import numpy as np
-from mycroft.util.log import LOG
-from mycroft.stt import STT, StreamThread, StreamingSTT
+from ovos_utils.log import LOG
+from ovos_utils.plugins.stt import STT, StreamThread, StreamingSTT
 
 
 class VoskKaldiSTT(STT):

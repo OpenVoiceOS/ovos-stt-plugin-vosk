@@ -1,2 +1,4 @@
 numpy
 vosk
+ovos_utils>=0.0.8a3
+SpeechRecognition>=3.8.1
