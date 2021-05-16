@@ -1,4 +1,5 @@
 numpy
 vosk
-ovos_utils>=0.0.8a3
+ovos-plugin-manager>=0.0.1a2
+ovos_skill_installer
 SpeechRecognition>=3.8.1

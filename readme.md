@@ -9,7 +9,7 @@ more info in the [docs](https://mycroft-ai.gitbook.io/docs/mycroft-technologies/
 
 ## Install
 
-`mycroft-pip install mycroft_stt_plugin_vosk`
+`mycroft-pip install jarbas-stt-plugin-vosk`
 
 You can download official models from [alphacephei](https://alphacephei.com/vosk/models)
 
@@ -17,13 +17,13 @@ Models for Iberian Languages can be found [here](https://github.com/JarbasIberia
 
 ## Configuration
 
-You need to download a kaldi model, none is included in this package by default
+You need to download a kaldi model or provide a direct download url
 
 ```json
   "stt": {
     "module": "vosk_stt_plug",
     "vosk_stt_plug": {
-        "model_folder": "path/to/model/folder"
+        "model": "path/to/model/folder"
     }
   }
  
@@ -36,11 +36,11 @@ You need to download a kaldi model, none is included in this package by default
   "stt": {
     "module": "vosk_streaming_stt_plug",
     "vosk_streaming_stt_plug": {
-        "model_folder": "path/to/model/folder",
+        "model": "http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip",
         "verbose": true
     },
     "vosk_stt_plug": {
-        "model_folder": "path/to/model/folder"
+        "model_folder": "http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip"
     }
   }
  
@@ -52,3 +52,7 @@ You need to download a kaldi model, none is included in this package by default
 `vosk_streaming_stt_plug` - streaming STT, transcription happens real time
 
 `verbose` - print partial transcriptions
+
+`model` - full path or direct download url for model
+
+`lang` - optional, if `model` not provided will download default small model (if it exists)
