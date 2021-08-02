@@ -17,7 +17,7 @@ setup(
     packages=['ovos_stt_plugin_vosk'],
     install_requires=["numpy",
                       "vosk",
-                      "ovos-plugin-manager>=0.0.1a2",
+                      "ovos-plugin-manager>=0.0.1a7",
                       "ovos_skill_installer"],
     zip_safe=True,
     classifiers=[
