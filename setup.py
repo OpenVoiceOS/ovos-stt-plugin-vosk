@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 from setuptools import setup
 
-PLUGIN_ENTRY_POINT = ('vosk_stt_plug = jarbas_stt_plugin_vosk:VoskKaldiSTT',
-                      'vosk_streaming_stt_plug = jarbas_stt_plugin_vosk:VoskKaldiStreamingSTT')
+PLUGIN_ENTRY_POINT = (
+    'ovos-stt-plugin-vosk = ovos_stt_plugin_vosk:VoskKaldiSTT',
+    'ovos-stt-plugin-vosk-streaming = ovos_stt_plugin_vosk:VoskKaldiStreamingSTT'
+)
+
 setup(
-    name='jarbas-stt-plugin-vosk',
-    version='0.2.1',
+    name='ovos-stt-plugin-vosk',
+    version='0.1.0',
     description='A vosk stt plugin for mycroft',
-    url='https://github.com/JarbasLingua/jarbas-stt-plugin-vosk',
+    url='https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk',
     author='JarbasAi',
     author_email='jarbasai@mailfence.com',
     license='Apache-2.0',
-    packages=['jarbas_stt_plugin_vosk'],
-    install_requires=["numpy", "vosk",
+    packages=['ovos_stt_plugin_vosk'],
+    install_requires=["numpy",
+                      "vosk",
                       "ovos-plugin-manager>=0.0.1a2",
                       "ovos_skill_installer"],
     zip_safe=True,
@@ -33,6 +37,6 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
     ],
-    keywords='mycroft plugin stt',
+    keywords='mycroft ovos plugin stt',
     entry_points={'mycroft.plugin.stt': PLUGIN_ENTRY_POINT}
 )
