@@ -34,7 +34,7 @@ You need to download a kaldi model or provide a direct download url
         "verbose": true
     },
     "ovos-stt-plugin-vosk": {
-        "model_folder": "http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip"
+        "model": "http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip"
     }
   }
  
