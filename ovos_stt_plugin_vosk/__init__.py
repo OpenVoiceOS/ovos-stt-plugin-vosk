@@ -30,7 +30,7 @@ class VoskKaldiSTT(STT):
 
     @staticmethod
     def download_model(url):
-        folder = join(XDG.xdg_data_home, 'vosk_models')
+        folder = join(XDG.xdg_data_home, 'vosk')
         name = url.split("/")[-1].split(".")[0]
         model_path = join(folder, name)
         if not exists(model_path):
@@ -118,8 +118,11 @@ class VoskKaldiStreamThread(StreamThread):
 
     def finalize(self):
         if self.previous_partial:
-            self.kaldi.FinalResult()
+            self.text = self.kaldi.FinalResult()
             self.previous_partial = ""
+        text = self.text
+        self.text = ""
+        return text
 
 
 class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
@@ -133,8 +136,3 @@ class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
         return VoskKaldiStreamThread(
             self.queue, self.lang, self.kaldi, self.verbose
         )
-
-    def stream_stop(self):
-        if self.stream is not None:
-            self.stream.finalize()
-        return super().stream_stop()
