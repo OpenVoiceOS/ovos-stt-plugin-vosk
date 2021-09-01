@@ -11,8 +11,8 @@ from xdg import BaseDirectory as XDG
 
 
 class VoskKaldiSTT(STT):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         # model_folder for backwards compat
         model_path = self.config.get("model_folder") or self.config.get(
             "model")
@@ -127,8 +127,8 @@ class VoskKaldiStreamThread(StreamThread):
 
 class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.verbose = self.config.get("verbose", False)
 
     def create_streaming_thread(self):
