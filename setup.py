@@ -8,7 +8,7 @@ PLUGIN_ENTRY_POINT = (
 
 setup(
     name='ovos-stt-plugin-vosk',
-    version='0.1.1',
+    version='0.1.2',
     description='A vosk stt plugin for mycroft',
     url='https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk',
     author='JarbasAi',

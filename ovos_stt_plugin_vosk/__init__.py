@@ -97,27 +97,32 @@ class VoskKaldiStreamThread(StreamThread):
         self.kaldi = kaldi
         self.verbose = verbose
         self.previous_partial = ""
+        self.running = True
 
     def handle_audio_stream(self, audio, language):
-        for a in audio:
-            data = np.frombuffer(a, np.int16)
-            if self.kaldi.AcceptWaveform(data):
-                res = self.kaldi.Result()
-                res = json.loads(res)
-                self.text = res["text"]
-            else:
-                res = self.kaldi.PartialResult()
-                res = json.loads(res)
-                self.text = res["partial"]
-        if self.verbose:
-            if self.previous_partial != self.text:
-                LOG.info("Partial Transcription: " + self.text)
-        self.previous_partial = self.text
+        if self.running:
+            for a in audio:
+                data = np.frombuffer(a, np.int16)
+                if self.kaldi.AcceptWaveform(data):
+                    res = self.kaldi.Result()
+                    res = json.loads(res)
+                    self.text = res["text"]
+                else:
+                    res = self.kaldi.PartialResult()
+                    res = json.loads(res)
+                    self.text = res["partial"]
+            if self.verbose:
+                if self.previous_partial != self.text:
+                    LOG.info("Partial Transcription: " + self.text)
+            self.previous_partial = self.text
 
         return self.text
 
     def finalize(self):
+        self.running = False
         if self.previous_partial:
+            if self.verbose:
+                LOG.info("Finalizing stream")
             self.text = self.kaldi.FinalResult()
             self.previous_partial = ""
         text = self.text
