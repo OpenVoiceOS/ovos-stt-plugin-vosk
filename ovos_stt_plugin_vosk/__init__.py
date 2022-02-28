@@ -1,4 +1,3 @@
-from os.path import isdir
 import json
 from vosk import Model as KaldiModel, KaldiRecognizer
 from queue import Queue
@@ -7,15 +6,15 @@ from ovos_utils.log import LOG
 from ovos_plugin_manager.templates.stt import STT, StreamThread, StreamingSTT
 from ovos_skill_installer import download_extract_zip, download_extract_tar
 from os.path import join, exists, isdir
-from xdg import BaseDirectory as XDG
+from ovos_utils.xdg_utils import xdg_data_home
 
 
 class VoskKaldiSTT(STT):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # model_folder for backwards compat
-        model_path = self.config.get("model_folder") or self.config.get(
-            "model")
+        model_path = self.config.get("model_folder") or \
+                     self.config.get("model")
         lang = self.config.get("lang")
         if not model_path and lang:
             model_path = self.lang2modelurl(lang)
@@ -30,7 +29,7 @@ class VoskKaldiSTT(STT):
 
     @staticmethod
     def download_model(url):
-        folder = join(XDG.xdg_data_home, 'vosk')
+        folder = join(xdg_data_home(), 'vosk')
         name = url.split("/")[-1].split(".")[0]
         model_path = join(folder, name)
         if not exists(model_path):

@@ -1,6 +1,14 @@
 name: Run License Tests
 on:
   push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'requirements/**'
+      - 'setup.py'
   workflow_dispatch:
 
 jobs:
@@ -20,7 +28,7 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt install python3-dev swig libssl-dev
+          sudo apt install python3-dev swig libssl-dev portaudio19-dev libpulse-dev
       - name: Install core repo
         run: |
           pip install .
