@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/HEAD)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.3a1...HEAD)
+
+**Implemented enhancements:**
+
+- feat/multi\_lang\_limited\_voc [\#3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/3) ([NeonJarbas](https://github.com/NeonJarbas))
+
+## [V0.1.3a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.3a1) (2022-02-28)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.2a1...V0.1.3a1)
+
 ## [V0.1.2a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.2a1) (2022-02-28)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0ccda3d8a1f786b3363622d3f6b23acd8c7fe72c...V0.1.2a1)
