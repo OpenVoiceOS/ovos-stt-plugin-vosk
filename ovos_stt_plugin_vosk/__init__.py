@@ -1,89 +1,83 @@
-from os.path import isdir
 import json
-from vosk import Model as KaldiModel, KaldiRecognizer
+from os.path import join, exists
 from queue import Queue
-import numpy as np
-from ovos_utils.log import LOG
+
 from ovos_plugin_manager.templates.stt import STT, StreamThread, StreamingSTT
 from ovos_skill_installer import download_extract_zip, download_extract_tar
-from os.path import join, exists, isdir
+from ovos_utils.log import LOG
 from ovos_utils.xdg_utils import xdg_data_home
-from ovos_utils.file_utils import read_vocab_file, resolve_resource_file, resolve_ovos_resource_file
+from vosk import Model as KaldiModel, KaldiRecognizer
+from speech_recognition import AudioData
 
 
-class VoskKaldiSTT(STT):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # model_folder for backwards compat
-        self.model_path = self.config.get("model_folder") or self.config.get("model")
-        if not self.model_path and self.lang:
-            self.model_path = self.download_language(self.lang)
-        if not self.model_path or not isdir(self.model_path):
-            LOG.error("You need to provide a valid model path or url")
-            LOG.info(
-                "download a model from https://alphacephei.com/vosk/models")
-            raise FileNotFoundError
+class ModelContainer:
+    def __init__(self):
+        self.engines = {}
+        self.models = {}
 
-        self.engines = {
-            self.lang: KaldiRecognizer(KaldiModel(self.model_path), 16000)
-        }
-        self.limited_voc_engines = {}
-        self.limited = False
-
-    def download_language(self, lang=None):
-        lang = lang or self.lang
+    def get_engine(self, lang):
         lang = lang.split("-")[0].lower()
-        model_path = self.lang2modelurl(lang)
-        if model_path and model_path.startswith("http"):
-            model_path = self.download_model(model_path)
-        return model_path
+        self.load_language(lang)
+        return self.engines[lang]
 
-    def load_language(self, lang=None):
-        lang = lang or self.lang
-        lang = lang.split("-")[0].lower()
-        if lang in self.engines or lang in self.limited_voc_engines:
-            return
-        model_path = self.download_language(lang)
-        if model_path:
-            self.engines[lang] = KaldiRecognizer(KaldiModel(model_path), 16000)
-        else:
-            LOG.error(f"No default model available for {lang}")
-            raise FileNotFoundError
+    def get_partial_transcription(self, lang):
+        engine = self.get_engine(lang)
+        res = engine.PartialResult()
+        return json.loads(res)["partial"]
 
-    def unload_language(self, lang=None):
-        lang = lang or self.lang
-        if lang in self.engines:
-            del self.engines[lang]
-            self.engines.pop(lang)
-        if lang in self.limited_voc_engines:
-            del self.limited_voc_engines[lang]
-            self.limited_voc_engines.pop(lang)
+    def get_final_transcription(self, lang):
+        engine = self.get_engine(lang)
+        res = engine.FinalResult()
+        return json.loads(res)["text"]
 
-    def enable_full_vocabulary(self, lang=None):
-        """ enable default transcription mode """
-        lang = lang or self.lang
-        self.limited = False
-        if lang in self.limited_voc_engines:
-            self.limited_voc_engines.pop(lang)
-            self.engines[lang] = KaldiRecognizer(KaldiModel(model_path), 16000)
+    def process_audio(self, audio, lang):
+        engine = self.get_engine(lang)
+        if isinstance(audio, AudioData):
+            audio = audio.get_wav_data()
+        return engine.AcceptWaveform(audio)
 
-    def enable_limited_vocabulary(self, words, lang=None, permanent=True):
+    def enable_limited_vocabulary(self, words, lang):
         """
         enable limited vocabulary mode
         will only consider pre defined .voc files
         """
-        lang = lang or self.lang
-        if lang == self.lang:
-            model_path = self.model_path
-        else:
-            model_path = self.lang2modelurl(lang)
+        model_path = self.models[lang]
+        self.engines[lang] = KaldiRecognizer(
+            KaldiModel(model_path), 16000, json.dumps(words))
+
+    def enable_full_vocabulary(self, lang=None):
+        """ enable default transcription mode """
+        model_path = self.models[lang]
+        self.engines[lang] = KaldiRecognizer(
+            KaldiModel(model_path), 16000)
+
+    def load_model(self, model_path, lang):
+        lang = lang.split("-")[0].lower()
+        self.models[lang] = model_path
         if model_path:
-            self.limited_voc_engines[lang] = KaldiRecognizer(KaldiModel(model_path),
-                                                             16000, json.dumps(words))
-            if permanent:
-                del self.engines[lang]
-                self.engines[lang] = self.limited_voc_engines[lang]
-            self.limited = True
+            self.engines[lang] = KaldiRecognizer(KaldiModel(model_path), 16000)
+        else:
+            raise FileNotFoundError
+
+    def load_language(self, lang):
+        lang = lang.split("-")[0].lower()
+        if lang in self.engines:
+            return
+        model_path = self.download_language(lang)
+        self.load_model(model_path, lang)
+
+    def unload_language(self, lang):
+        if lang in self.engines:
+            del self.engines[lang]
+            self.engines.pop(lang)
+
+    @staticmethod
+    def download_language(lang):
+        lang = lang.split("-")[0].lower()
+        model_path = ModelContainer.lang2modelurl(lang)
+        if model_path and model_path.startswith("http"):
+            model_path = ModelContainer.download_model(model_path)
+        return model_path
 
     @staticmethod
     def download_model(url):
@@ -141,54 +135,58 @@ class VoskKaldiSTT(STT):
         lang = lang.split("-")[0]
         return lang2url.get(lang)
 
-    def execute(self, audio, language=None):
-        # load a new model on the fly if needed
-        lang = language or self.lang
-        self.load_language(lang)
 
-        # if limited vocabulary mode is enabled use that model instead
-        if self.limited:
-            engine = self.limited_voc_engines.get(lang) or self.engines[lang]
+class VoskKaldiSTT(STT):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # model_folder for backwards compat
+        model_path = self.config.get("model_folder") or self.config.get("model")
+
+        self.model = ModelContainer()
+        if model_path:
+            if model_path.startswith("http"):
+                model_path = ModelContainer.download_model(model_path)
+            self.model.load_model(model_path, self.lang)
         else:
-            engine = self.engines[lang]
+            self.model.load_language(self.lang)
+        self.verbose = True
 
-        # transcribe
-        engine.AcceptWaveform(audio.get_wav_data())
-        res = engine.FinalResult()
-        res = json.loads(res)
-        return res["text"]
+    def load_language(self, lang):
+        self.model.load_language(lang)
 
-    def shutdown(self):
-        for lang in set(self.engines.keys()) + \
-                    set(self.limited_voc_engines.keys()):
-            self.unload_language(lang)
+    def unload_language(self, lang):
+        self.model.unload_language(lang)
+
+    def enable_limited_vocabulary(self, words, lang):
+        self.model.enable_limited_vocabulary(words, lang or self.lang)
+
+    def enable_full_vocabulary(self, lang=None):
+        self.model.enable_full_vocabulary(lang or self.lang)
+
+    def execute(self, audio, language=None):
+        lang = language or self.lang
+        self.model.process_audio(audio, lang)
+        return self.model.get_final_transcription(lang)
 
 
 class VoskKaldiStreamThread(StreamThread):
-    def __init__(self, queue, lang, kaldi, verbose=True):
+    def __init__(self, queue, lang, model, verbose=True):
         super().__init__(queue, lang)
-        self.kaldi = kaldi
+        self.model = model
         self.verbose = verbose
         self.previous_partial = ""
         self.running = True
 
     def handle_audio_stream(self, audio, language):
+        lang = language or self.language
         if self.running:
             for a in audio:
-                data = np.frombuffer(a, np.int16)
-                if self.kaldi.AcceptWaveform(data):
-                    res = self.kaldi.Result()
-                    res = json.loads(res)
-                    self.text = res["text"]
-                else:
-                    res = self.kaldi.PartialResult()
-                    res = json.loads(res)
-                    self.text = res["partial"]
-            if self.verbose:
-                if self.previous_partial != self.text:
-                    LOG.info("Partial Transcription: " + self.text)
-            self.previous_partial = self.text
-
+                self.model.process_audio(a, lang)
+                self.text = self.model.get_partial_transcription(lang)
+                if self.verbose:
+                    if self.previous_partial != self.text:
+                        LOG.info("Partial Transcription: " + self.text)
+                self.previous_partial = self.text
         return self.text
 
     def finalize(self):
@@ -196,9 +194,9 @@ class VoskKaldiStreamThread(StreamThread):
         if self.previous_partial:
             if self.verbose:
                 LOG.info("Finalizing stream")
-            self.text = self.kaldi.FinalResult()
+            self.text = self.model.get_final_transcription(self.language)
             self.previous_partial = ""
-        text = self.text
+        text = str(self.text)
         self.text = ""
         return text
 
@@ -212,5 +210,5 @@ class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
     def create_streaming_thread(self):
         self.queue = Queue()
         return VoskKaldiStreamThread(
-            self.queue, self.lang, self.kaldi, self.verbose
+            self.queue, self.lang, self.model, self.verbose
         )

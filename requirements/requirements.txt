@@ -1,4 +1,3 @@
-numpy
 vosk
 ovos-plugin-manager>=0.0.1
 ovos_skill_installer
