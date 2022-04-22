@@ -50,3 +50,12 @@ You need to download a kaldi model or provide a direct download url
 `model` - full path or direct download url for model
 
 `lang` - optional, if `model` not provided will download default small model (if it exists)
+
+
+## Docker
+
+This plugin can be used together with [ovos-stt-http-server](https://github.com/OpenVoiceOS/ovos-stt-http-server) 
+
+```bash
+docker run -p 8080:8080 ghcr.io/openvoiceos/vosk-stt-http-server:master
+```
