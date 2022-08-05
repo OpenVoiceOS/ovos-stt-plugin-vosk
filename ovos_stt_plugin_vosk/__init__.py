@@ -6,8 +6,52 @@ from ovos_plugin_manager.templates.stt import STT, StreamThread, StreamingSTT
 from ovos_skill_installer import download_extract_zip, download_extract_tar
 from ovos_utils.log import LOG
 from ovos_utils.xdg_utils import xdg_data_home
-from vosk import Model as KaldiModel, KaldiRecognizer
 from speech_recognition import AudioData
+from vosk import Model as KaldiModel, KaldiRecognizer
+
+_lang2url = {
+    "en": "http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip",
+    "en-in": "http://alphacephei.com/vosk/models/vosk-model-small-en-in-0.4.zip",
+    "cn": "https://alphacephei.com/vosk/models/vosk-model-small-cn-0.3.zip",
+    "ru": "https://alphacephei.com/vosk/models/vosk-model-small-ru-0.15.zip",
+    "fr": "https://alphacephei.com/vosk/models/vosk-model-small-fr-pguyot-0.3.zip",
+    "de": "https://alphacephei.com/vosk/models/vosk-model-small-de-0.15.zip",
+    "es": "https://alphacephei.com/vosk/models/vosk-model-small-es-0.3.zip",
+    "pt": "https://alphacephei.com/vosk/models/vosk-model-small-pt-0.3.zip",
+    "gr": "https://alphacephei.com/vosk/models/vosk-model-el-gr-0.7.zip",
+    "tr": "https://alphacephei.com/vosk/models/vosk-model-small-tr-0.3.zip",
+    "vn": "https://alphacephei.com/vosk/models/vosk-model-small-vn-0.3.zip",
+    "it": "https://alphacephei.com/vosk/models/vosk-model-small-it-0.4.zip",
+    "nl": "https://alphacephei.com/vosk/models/vosk-model-nl-spraakherkenning-0.6-lgraph.zip",
+    "ca": "https://alphacephei.com/vosk/models/vosk-model-small-ca-0.4.zip",
+    "ar": "https://alphacephei.com/vosk/models/vosk-model-ar-mgb2-0.4.zip",
+    "fa": "https://alphacephei.com/vosk/models/vosk-model-small-fa-0.5.zip",
+    "tl": "https://alphacephei.com/vosk/models/vosk-model-tl-ph-generic-0.6.zip"
+}
+_biglang2url = {
+    "en": "https://alphacephei.com/vosk/models/vosk-model-en-us-aspire-0.2.zip",
+    "en-in": "http://alphacephei.com/vosk/models/vosk-model-en-in-0.4.zip",
+    "cn": "https://alphacephei.com/vosk/models/vosk-model-cn-0.1.zip",
+    "ru": "https://alphacephei.com/vosk/models/vosk-model-ru-0.10.zip",
+    "fr": "https://github.com/pguyot/zamia-speech/releases/download/20190930/kaldi-generic-fr-tdnn_f-r20191016.tar.xz",
+    "de": "https://alphacephei.com/vosk/models/vosk-model-de-0.6.zip",
+    "nl": "https://alphacephei.com/vosk/models/vosk-model-nl-spraakherkenning-0.6.zip",
+    "fa": "https://alphacephei.com/vosk/models/vosk-model-fa-0.5.zip"
+
+}
+
+VoskSTTConfig = {
+    lang: [{"model": url,
+            "lang": lang,
+            "display_name": url.split("/")[-1].replace(".zip", "") + " (Small)",
+            "offline": True}]
+    for lang, url in _lang2url.items()
+}
+for lang, url in _biglang2url.items():
+    VoskSTTConfig[lang].append({"model": url,
+                                "lang": lang,
+                                "display_name": url.split("/")[-1].replace(".zip", "") + " (Large)",
+                                "offline": True})
 
 
 class ModelContainer:
@@ -97,43 +141,13 @@ class ModelContainer:
 
     @staticmethod
     def lang2modelurl(lang, small=True):
-        lang2url = {
-            "en": "http://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip",
-            "en-in": "http://alphacephei.com/vosk/models/vosk-model-small-en-in-0.4.zip",
-            "cn": "https://alphacephei.com/vosk/models/vosk-model-small-cn-0.3.zip",
-            "ru": "https://alphacephei.com/vosk/models/vosk-model-small-ru-0.15.zip",
-            "fr": "https://alphacephei.com/vosk/models/vosk-model-small-fr-pguyot-0.3.zip",
-            "de": "https://alphacephei.com/vosk/models/vosk-model-small-de-0.15.zip",
-            "es": "https://alphacephei.com/vosk/models/vosk-model-small-es-0.3.zip",
-            "pt": "https://alphacephei.com/vosk/models/vosk-model-small-pt-0.3.zip",
-            "gr": "https://alphacephei.com/vosk/models/vosk-model-el-gr-0.7.zip",
-            "tr": "https://alphacephei.com/vosk/models/vosk-model-small-tr-0.3.zip",
-            "vn": "https://alphacephei.com/vosk/models/vosk-model-small-vn-0.3.zip",
-            "it": "https://alphacephei.com/vosk/models/vosk-model-small-it-0.4.zip",
-            "nl": "https://alphacephei.com/vosk/models/vosk-model-nl-spraakherkenning-0.6-lgraph.zip",
-            "ca": "https://alphacephei.com/vosk/models/vosk-model-small-ca-0.4.zip",
-            "ar": "https://alphacephei.com/vosk/models/vosk-model-ar-mgb2-0.4.zip",
-            "fa": "https://alphacephei.com/vosk/models/vosk-model-small-fa-0.5.zip",
-            "tl": "https://alphacephei.com/vosk/models/vosk-model-tl-ph-generic-0.6.zip"
-        }
-        biglang2url = {
-            "en": "https://alphacephei.com/vosk/models/vosk-model-en-us-aspire-0.2.zip",
-            "en-in": "http://alphacephei.com/vosk/models/vosk-model-en-in-0.4.zip",
-            "cn": "https://alphacephei.com/vosk/models/vosk-model-cn-0.1.zip",
-            "ru": "https://alphacephei.com/vosk/models/vosk-model-ru-0.10.zip",
-            "fr": "https://github.com/pguyot/zamia-speech/releases/download/20190930/kaldi-generic-fr-tdnn_f-r20191016.tar.xz",
-            "de": "https://alphacephei.com/vosk/models/vosk-model-de-0.6.zip",
-            "nl": "https://alphacephei.com/vosk/models/vosk-model-nl-spraakherkenning-0.6.zip",
-            "fa": "https://alphacephei.com/vosk/models/vosk-model-fa-0.5.zip"
-
-        }
         if not small:
-            lang2url.update(biglang2url)
+            _lang2url.update(_biglang2url)
         lang = lang.lower()
-        if lang in lang2url:
-            return lang2url[lang]
+        if lang in _lang2url:
+            return _lang2url[lang]
         lang = lang.split("-")[0]
-        return lang2url.get(lang)
+        return _lang2url.get(lang)
 
 
 class VoskKaldiSTT(STT):

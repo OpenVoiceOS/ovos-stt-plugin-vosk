@@ -54,6 +54,10 @@ PLUGIN_ENTRY_POINT = (
     'ovos-stt-plugin-vosk = ovos_stt_plugin_vosk:VoskKaldiSTT',
     'ovos-stt-plugin-vosk-streaming = ovos_stt_plugin_vosk:VoskKaldiStreamingSTT'
 )
+CONFIG_ENTRY_POINT = (
+    'ovos-stt-plugin-vosk.config = ovos_stt_plugin_vosk:VoskSTTConfig',
+    'ovos-stt-plugin-vosk-streaming.config = ovos_stt_plugin_vosk:VoskSTTConfig'
+)
 
 setup(
     name='ovos-stt-plugin-vosk',
@@ -84,5 +88,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords='mycroft ovos plugin stt',
-    entry_points={'mycroft.plugin.stt': PLUGIN_ENTRY_POINT}
+    entry_points={'mycroft.plugin.stt': PLUGIN_ENTRY_POINT,
+                  'mycroft.plugin.stt.config': CONFIG_ENTRY_POINT}
 )
