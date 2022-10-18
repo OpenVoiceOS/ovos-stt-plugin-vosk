@@ -43,6 +43,7 @@ _biglang2url = {
 VoskSTTConfig = {
     lang: [{"model": url,
             "lang": lang,
+            "priority": 40,
             "display_name": url.split("/")[-1].replace(".zip", "") + " (Small)",
             "offline": True}]
     for lang, url in _lang2url.items()
@@ -50,6 +51,7 @@ VoskSTTConfig = {
 for lang, url in _biglang2url.items():
     VoskSTTConfig[lang].append({"model": url,
                                 "lang": lang,
+                                "priority": 70,
                                 "display_name": url.split("/")[-1].replace(".zip", "") + " (Large)",
                                 "offline": True})
 
