@@ -1,11 +1,10 @@
 import json
 from os.path import join, exists
-from queue import Queue
-
 from ovos_plugin_manager.templates.stt import STT, StreamThread, StreamingSTT
 from ovos_skill_installer import download_extract_zip, download_extract_tar
 from ovos_utils.log import LOG
 from ovos_utils.xdg_utils import xdg_data_home
+from queue import Queue
 from speech_recognition import AudioData
 from vosk import Model as KaldiModel, KaldiRecognizer
 
@@ -43,17 +42,21 @@ _biglang2url = {
 VoskSTTConfig = {
     lang: [{"model": url,
             "lang": lang,
-            "priority": 40,
-            "display_name": url.split("/")[-1].replace(".zip", "") + " (Small)",
-            "offline": True}]
+            "meta": {
+                "priority": 40,
+                "display_name": url.split("/")[-1].replace(".zip", "") + " (Small)",
+                "offline": True}
+            }]
     for lang, url in _lang2url.items()
 }
 for lang, url in _biglang2url.items():
     VoskSTTConfig[lang].append({"model": url,
                                 "lang": lang,
-                                "priority": 70,
-                                "display_name": url.split("/")[-1].replace(".zip", "") + " (Large)",
-                                "offline": True})
+                                "meta": {
+                                    "priority": 70,
+                                    "display_name": url.split("/")[-1].replace(".zip", "") + " (Large)",
+                                    "offline": True}
+                                })
 
 
 class ModelContainer:
