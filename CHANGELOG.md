@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/HEAD)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a2...HEAD)
+
+**Implemented enhancements:**
+
+- update plugin config [\#7](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/7) ([JarbasAl](https://github.com/JarbasAl))
+
+**Fixed bugs:**
+
+- installing latest version breaks pip and all other packages [\#6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/issues/6)
+
+## [V0.1.4a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a2) (2022-10-18)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a1...V0.1.4a2)
+
 ## [V0.1.4a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a1) (2022-08-05)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.3...V0.1.4a1)
