@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a2...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a3...HEAD)
+
+**Merged pull requests:**
+
+- Remove build files [\#8](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/8) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.1.4a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a3) (2022-10-24)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a2...V0.1.4a3)
 
 **Implemented enhancements:**
 
