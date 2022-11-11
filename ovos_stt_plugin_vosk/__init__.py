@@ -1,8 +1,10 @@
 import json
+from time import sleep
 from os.path import join, exists
 from ovos_plugin_manager.templates.stt import STT, StreamThread, StreamingSTT
 from ovos_skill_installer import download_extract_zip, download_extract_tar
 from ovos_utils.log import LOG
+from ovos_utils.network_utils import is_connected
 from ovos_utils.xdg_utils import xdg_data_home
 from queue import Queue
 from speech_recognition import AudioData
@@ -134,6 +136,10 @@ class ModelContainer:
         name = url.split("/")[-1].split(".")[0]
         model_path = join(folder, name)
         if not exists(model_path):
+            while not is_connected():
+                LOG.info("Waiting for internet in order to download vosk language model")
+                # waiting for wifi setup most likely
+                sleep(10)
             LOG.info(f"Downloading model for vosk {url}")
             LOG.info("this might take a while")
             if url.endswith(".zip"):
