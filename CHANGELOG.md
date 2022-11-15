@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/HEAD)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a4...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a5...HEAD)
+
+**Fixed bugs:**
+
+- Fix model download path parsing [\#10](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/10) ([NeonDaniel](https://github.com/NeonDaniel))
+
+## [V0.1.4a5](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a5) (2022-11-11)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a4...V0.1.4a5)
 
 **Fixed bugs:**
 
