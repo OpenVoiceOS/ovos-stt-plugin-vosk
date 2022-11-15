@@ -133,7 +133,7 @@ class ModelContainer:
     @staticmethod
     def download_model(url):
         folder = join(xdg_data_home(), 'vosk')
-        name = url.split("/")[-1].split(".")[0]
+        name = url.split("/")[-1].rsplit(".", 1)[0]
         model_path = join(folder, name)
         if not exists(model_path):
             while not is_connected():
