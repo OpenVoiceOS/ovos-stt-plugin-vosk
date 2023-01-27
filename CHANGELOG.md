@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/HEAD)
+## [V0.1.4a6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a6) (2022-11-15)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a5...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a5...V0.1.4a6)
 
 **Fixed bugs:**
 
