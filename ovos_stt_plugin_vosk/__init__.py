@@ -22,7 +22,7 @@ _lang2url = {
     "gr": "https://alphacephei.com/vosk/models/vosk-model-el-gr-0.7.zip",
     "tr": "https://alphacephei.com/vosk/models/vosk-model-small-tr-0.3.zip",
     "vn": "https://alphacephei.com/vosk/models/vosk-model-small-vn-0.3.zip",
-    "it": "https://alphacephei.com/vosk/models/vosk-model-small-it-0.4.zip",
+    "it": "https://alphacephei.com/vosk/models/vosk-model-small-it-0.22.zip",
     "nl": "https://alphacephei.com/vosk/models/vosk-model-nl-spraakherkenning-0.6-lgraph.zip",
     "ca": "https://alphacephei.com/vosk/models/vosk-model-small-ca-0.4.zip",
     "ar": "https://alphacephei.com/vosk/models/vosk-model-ar-mgb2-0.4.zip",
@@ -37,7 +37,8 @@ _biglang2url = {
     "fr": "https://github.com/pguyot/zamia-speech/releases/download/20190930/kaldi-generic-fr-tdnn_f-r20191016.tar.xz",
     "de": "https://alphacephei.com/vosk/models/vosk-model-de-0.6.zip",
     "nl": "https://alphacephei.com/vosk/models/vosk-model-nl-spraakherkenning-0.6.zip",
-    "fa": "https://alphacephei.com/vosk/models/vosk-model-fa-0.5.zip"
+    "fa": "https://alphacephei.com/vosk/models/vosk-model-fa-0.5.zip",
+    "it": "https://alphacephei.com/vosk/models/vosk-model-it-0.22.zip"
 
 }
 
