@@ -1,5 +1,17 @@
 # Changelog
 
+## [Unreleased](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/HEAD)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4...HEAD)
+
+**Merged pull requests:**
+
+- bump IT model to version 0.22 [\#11](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/11) ([denics](https://github.com/denics))
+
+## [V0.1.4](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4) (2022-11-15)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a6...V0.1.4)
+
 ## [V0.1.4a6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a6) (2022-11-15)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a5...V0.1.4a6)
