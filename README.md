@@ -17,7 +17,7 @@ You need to download a kaldi model or provide a direct download url
   "stt": {
     "module": "ovos-stt-plugin-vosk",
     "ovos-stt-plugin-vosk": {
-        "model": "path/to/model/folder"
+        "model": "/path/to/unzipped/model/folder"
     }
   }
  

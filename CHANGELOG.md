@@ -1,76 +1,21 @@
 # Changelog
 
-## [V0.1.4a6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a6) (2022-11-15)
+## [0.2.1a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.1a1) (2024-09-11)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a5...V0.1.4a6)
-
-**Fixed bugs:**
-
-- Fix model download path parsing [\#10](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/10) ([NeonDaniel](https://github.com/NeonDaniel))
-
-## [V0.1.4a5](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a5) (2022-11-11)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a4...V0.1.4a5)
-
-**Fixed bugs:**
-
-- fix/initial model dl [\#9](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/9) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V0.1.4a4](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a4) (2022-10-28)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a3...V0.1.4a4)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.2.0a1...0.2.1a1)
 
 **Merged pull requests:**
 
-- Remove build files [\#8](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/8) ([NeonDaniel](https://github.com/NeonDaniel))
+- feat:semver [\#13](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/13) ([JarbasAl](https://github.com/JarbasAl))
+- Clarified syntax for model path [\#12](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/12) ([dickorydock](https://github.com/dickorydock))
 
-## [V0.1.4a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a3) (2022-10-24)
+## [V0.2.0a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.2.0a1) (2023-02-19)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a2...V0.1.4a3)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4...V0.2.0a1)
 
-**Implemented enhancements:**
+**Merged pull requests:**
 
-- update plugin config [\#7](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/7) ([JarbasAl](https://github.com/JarbasAl))
-
-**Fixed bugs:**
-
-- installing latest version breaks pip and all other packages [\#6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/issues/6)
-
-## [V0.1.4a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a2) (2022-10-18)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4a1...V0.1.4a2)
-
-## [V0.1.4a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.4a1) (2022-08-05)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.3...V0.1.4a1)
-
-**Implemented enhancements:**
-
-- feat/plugin\_configs [\#5](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/5) ([NeonJarbas](https://github.com/NeonJarbas))
-
-## [V0.1.3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.3) (2022-04-22)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.3a3...V0.1.3)
-
-## [V0.1.3a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.3a3) (2022-04-22)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.3a2...V0.1.3a3)
-
-## [V0.1.3a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.3a2) (2022-03-01)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.3a1...V0.1.3a2)
-
-**Implemented enhancements:**
-
-- feat/multi\_lang\_limited\_voc [\#3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/3) ([NeonJarbas](https://github.com/NeonJarbas))
-
-## [V0.1.3a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.3a1) (2022-02-28)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.2a1...V0.1.3a1)
-
-## [V0.1.2a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.1.2a1) (2022-02-28)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0ccda3d8a1f786b3363622d3f6b23acd8c7fe72c...V0.1.2a1)
+- bump IT model to version 0.22 [\#11](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/11) ([denics](https://github.com/denics))
 
 
 

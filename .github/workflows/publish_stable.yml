@@ -1,25 +1,22 @@
-# This workflow will generate a distribution and upload it to PyPI
-
-name: Publish Alpha Build ...aX
+name: Stable Release
 on:
   push:
-    branches:
-      - dev
-    paths-ignore:
-      - 'ovos_stt_plugin_vosk/version.py'
-      - 'test/**'
-      - 'examples/**'
-      - '.github/**'
-      - '.gitignore'
-      - 'LICENSE'
-      - 'CHANGELOG.md'
-      - 'MANIFEST.in'
-      - 'readme.md'
-      - 'scripts/**'
+    branches: [master]
   workflow_dispatch:
 
 jobs:
-  build_and_publish:
+  publish_stable:
+    uses: TigreGotico/gh-automations/.github/workflows/publish-stable.yml@master
+    secrets: inherit
+    with:
+      branch: 'master'
+      version_file: 'ovos_stt_plugin_vosk/version.py'
+      setup_py: 'setup.py'
+      publish_release: true
+
+  publish_pypi:
+    needs: publish_stable
+    if: success()  # Ensure this job only runs if the previous job succeeds
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,20 +30,6 @@ jobs:
       - name: Install Build Tools
         run: |
           python -m pip install build wheel
-      - name: Increment Version
-        run: |
-          VER=$(python setup.py --version)
-          python scripts/bump_alpha.py
-      - name: "Generate release changelog"
-        uses: heinrichreimer/github-changelog-generator-action@v2.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-        id: changelog
-      - name: Commit to dev
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Increment Version
-          branch: dev
       - name: version
         run: echo "::set-output name=version::$(python setup.py --version)"
         id: version
@@ -63,6 +46,7 @@ jobs:
             ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: true
+          commitish: dev
       - name: Build Distribution Packages
         run: |
           python setup.py sdist bdist_wheel
@@ -70,3 +54,19 @@ jobs:
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{secrets.PYPI_TOKEN}}
+
+
+  sync_dev:
+    needs: publish_stable
+    if: success()  # Ensure this job only runs if the previous job succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+          ref: master
+      - name: Push master -> dev
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: dev
