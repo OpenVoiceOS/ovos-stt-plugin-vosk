@@ -1,21 +1,16 @@
 # Changelog
 
-## [0.2.1a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.1a1) (2024-09-11)
+## [0.2.2a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.2a1) (2024-11-20)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.2.0a1...0.2.1a1)
-
-**Merged pull requests:**
-
-- feat:semver [\#13](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/13) ([JarbasAl](https://github.com/JarbasAl))
-- Clarified syntax for model path [\#12](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/12) ([dickorydock](https://github.com/dickorydock))
-
-## [V0.2.0a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.2.0a1) (2023-02-19)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.1.4...V0.2.0a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.2.1...0.2.2a1)
 
 **Merged pull requests:**
 
-- bump IT model to version 0.22 [\#11](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/11) ([denics](https://github.com/denics))
+- fix: drop deprecated import [\#16](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/16) ([JarbasAl](https://github.com/JarbasAl))
+
+## [V0.2.1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.2.1) (2024-09-11)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.1...V0.2.1)
 
 
 
