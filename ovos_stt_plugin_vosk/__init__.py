@@ -11,6 +11,7 @@ from time import sleep
 
 import requests
 from ovos_plugin_manager.templates.stt import STT, StreamThread, StreamingSTT
+from ovos_utils import classproperty
 from ovos_utils.log import LOG
 from ovos_utils.network_utils import is_connected
 from ovos_utils.xdg_utils import xdg_data_home
@@ -184,6 +185,16 @@ class VoskKaldiSTT(STT):
             self.model.load_language(self.lang)
         self.verbose = True
 
+    @classproperty
+    def available_languages(cls) -> set:
+        """Return languages supported by this TTS implementation in this state
+        This property should be overridden by the derived class to advertise
+        what languages that engine supports.
+        Returns:
+            set: supported languages
+        """
+        return set(VoskSTTConfig.keys())
+
     def load_language(self, lang):
         self.model.load_language(lang)
 
@@ -245,6 +256,18 @@ class VoskKaldiStreamingSTT(StreamingSTT, VoskKaldiSTT):
         return VoskKaldiStreamThread(
             self.queue, self.lang, self.model, self.verbose
         )
+
+    @classproperty
+    def available_languages(cls) -> set:
+        """Return languages supported by this TTS implementation in this state
+        This property should be overridden by the derived class to advertise
+        what languages that engine supports.
+        Returns:
+            set: supported languages
+        """
+        return set(VoskSTTConfig.keys())
+
+
 def download(url, file=None, session=None):
     """
     Pass file as a filename, open file object, or None to return the request bytes
