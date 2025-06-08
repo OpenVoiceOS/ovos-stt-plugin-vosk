@@ -1,16 +1,12 @@
 # Changelog
 
-## [0.2.2a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.2a1) (2024-11-20)
+## [0.2.4a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.4a1) (2025-06-08)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/V0.2.1...0.2.2a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.3...0.2.4a1)
 
 **Merged pull requests:**
 
-- fix: drop deprecated import [\#16](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/16) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V0.2.1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/V0.2.1) (2024-09-11)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.1...V0.2.1)
+- fix: compatibility with ovos-plugin-manager 1.X.X [\#18](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/18) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
