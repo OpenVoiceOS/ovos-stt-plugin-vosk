@@ -1,13 +1,13 @@
 name: Release Alpha and Propose Stable
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [closed]
     branches: [dev]
 
 jobs:
   publish_alpha:
-    if: github.event.pull_request.merged == true
     uses: TigreGotico/gh-automations/.github/workflows/publish-alpha.yml@master
     secrets: inherit
     with:
