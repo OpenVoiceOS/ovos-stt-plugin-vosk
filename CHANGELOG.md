@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.6a4](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a4) (2025-12-19)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a3...0.2.6a4)
+
+**Merged pull requests:**
+
+- chore\(deps\): update actions/setup-python action to v6 [\#28](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/28) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.2.6a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a3) (2025-12-19)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a2...0.2.6a3)
