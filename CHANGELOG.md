@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.7a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.7a3) (2026-01-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.7a1...0.2.7a3)
+
+**Closed issues:**
+
+- drop dependency on deprecated ovos\_skill\_installer [\#15](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/issues/15)
+
+**Merged pull requests:**
+
+- chore\(deps\): update actions/checkout action to v6 [\#25](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/25) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.7a1) (2026-01-09)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a6...0.2.7a1)
