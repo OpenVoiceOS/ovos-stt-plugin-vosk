@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.7a1) (2026-01-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a6...0.2.7a1)
+
+**Merged pull requests:**
+
+- fix: automations [\#32](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/32) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.6a6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a6) (2026-01-09)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a5...0.2.6a6)
