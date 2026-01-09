@@ -1,4 +1,3 @@
 vosk
-
-ovos-plugin-manager>=1.0.0,<2.0.0
-SpeechRecognition>=3.8.1
+ovos-plugin-manager>=2.1.1,<3.0.0
+ovos-utils>=0.8.4,<1.0.0
