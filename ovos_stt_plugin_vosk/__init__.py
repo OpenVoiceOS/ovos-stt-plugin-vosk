@@ -440,17 +440,17 @@ def download_extract_tar(tar_url, folder, tar_filename='',
 def download_extract_zip(zip_url, folder, zip_filename="",
                          skill_folder_name=None, session=None):
     """
-                         Download a ZIP archive from a URL and extract its contents into a target folder.
-                         
-                         If zip_filename is provided, download into that path; otherwise a temporary file is used.
-                         The target folder is created if it does not exist. If skill_folder_name is set,
-                         the function renames the extracted archive's top-level directory to that name.
-                         Parameters:
-                             zip_url (str): URL of the ZIP file to download.
-                             folder (str): Directory to extract archive contents into; will be created if missing.
-                             zip_filename (str): Path to save the downloaded ZIP. If empty, a temporary file is used.
-                             skill_folder_name (str): If provided, rename the extracted top-level folder to this name.
-                         """
+    Download a ZIP archive from a URL and extract its contents into a target folder.
+    
+    If zip_filename is provided, download into that path; otherwise a temporary file is used.
+    The target folder is created if it does not exist. If skill_folder_name is set,
+    the function renames the extracted archive's top-level directory to that name.
+    Parameters:
+        zip_url (str): URL of the ZIP file to download.
+        folder (str): Directory to extract archive contents into; will be created if missing.
+        zip_filename (str): Path to save the downloaded ZIP. If empty, a temporary file is used.
+        skill_folder_name (str): If provided, rename the extracted top-level folder to this name.
+    """
     try:
         makedirs(folder)
     except OSError:
