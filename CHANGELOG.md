@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.6a6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a6) (2026-01-09)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a5...0.2.6a6)
+
+**Merged pull requests:**
+
+- refactor: latest opm, drop speech\_recognition, allow model\_id [\#30](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/30) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.6a5](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a5) (2026-01-09)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a4...0.2.6a5)
