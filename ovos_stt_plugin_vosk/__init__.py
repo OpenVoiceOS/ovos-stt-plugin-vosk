@@ -15,7 +15,8 @@ from ovos_utils import classproperty
 from ovos_utils.log import LOG
 from ovos_utils.network_utils import is_connected
 from ovos_utils.xdg_utils import xdg_data_home
-from speech_recognition import AudioData
+from ovos_plugin_manager.utils.audio import AudioData, AudioFile
+from typing import Optional
 from vosk import Model as KaldiModel, KaldiRecognizer
 
 _lang2url = {
@@ -207,7 +208,7 @@ class VoskKaldiSTT(STT):
     def enable_full_vocabulary(self, lang=None):
         self.model.enable_full_vocabulary(lang or self.lang)
 
-    def execute(self, audio, language=None):
+    def execute(self, audio: AudioData, language: Optional[str]=None):
         lang = language or self.lang
         self.model.process_audio(audio, lang)
         return self.model.get_final_transcription(lang)
