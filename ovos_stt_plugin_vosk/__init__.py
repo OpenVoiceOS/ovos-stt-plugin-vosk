@@ -60,11 +60,31 @@ MODEL2URL["kaldi-generic-fr-tdnn_f-r20191016.tar.xz"] = "https://github.com/pguy
 
 class ModelContainer:
     def __init__(self, sample_rate: int = 16000):
+        """
+        Initialize a ModelContainer managing Vosk/Kaldi models and recognizers.
+        
+        Creates empty mappings for loaded engine instances and model paths, and sets the audio sample rate used when converting AudioData and when constructing recognizers.
+        
+        Parameters:
+            sample_rate (int): Audio sample rate in hertz used for audio conversion and recognizer initialization. Default is 16000.
+        """
         self.engines = {}
         self.models = {}
         self.sample_rate = sample_rate
 
     def get_engine(self, lang):
+        """
+        Get the Kaldi recognizer for the specified language, ensuring the language model is loaded.
+        
+        Parameters:
+            lang (str): Language code (region suffix allowed, e.g. "en-US"); the region is stripped and only the base language is used.
+        
+        Returns:
+            KaldiRecognizer: The Kaldi engine configured for the normalized language.
+        
+        Raises:
+            ValueError: If the language is not supported or its model cannot be resolved/loaded.
+        """
         lang = lang.split("-")[0].lower()
         self.load_language(lang)
         return self.engines[lang]
@@ -80,6 +100,20 @@ class ModelContainer:
         return json.loads(res)["text"]
 
     def process_audio(self, audio, lang):
+        """
+        Feed a chunk of audio to the recognizer for the specified language.
+        
+        If `audio` is an AudioData instance it is converted to WAV bytes using the container's configured sample rate before being sent to the recognizer. This updates the recognizer's internal state (partial/final results) for the given language.
+        
+        Parameters:
+            audio: AudioData or bytes-like object
+                Audio to process. If an AudioData object is provided, it will be converted to WAV at self.sample_rate.
+            lang: str
+                Language code or model key identifying which recognizer/engine to use.
+        
+        Returns:
+            bool: `True` if processing this audio produced a final recognition result, `False` otherwise.
+        """
         engine = self.get_engine(lang)
         if isinstance(audio, AudioData):
             audio = audio.get_wav_data(self.sample_rate)
@@ -87,18 +121,41 @@ class ModelContainer:
 
     def enable_limited_vocabulary(self, words, lang):
         """
-        enable limited vocabulary mode
-        will only consider pre defined .voc files
+        Enable limited-vocabulary recognition for a given language.
+        
+        Sets the recognizer for the specified language to accept only the provided vocabulary, using the configured model and sample rate.
+        
+        Parameters:
+            words (Sequence[str] or dict): The vocabulary or grammar to restrict recognition to. Can be a list of words or a JSON-serializable grammar structure.
+            lang (str): Language code identifying which loaded model/recognizer to replace.
         """
         model_path = self.models[lang]
         self.engines[lang] = KaldiRecognizer(KaldiModel(model_path), self.sample_rate, json.dumps(words))
 
     def enable_full_vocabulary(self, lang=None):
-        """ enable default transcription mode """
+        """
+        Enable full-vocabulary speech recognition for the specified language.
+        
+        Initializes and stores a Kaldi recognizer for the given language using the container's configured sample rate.
+        
+        Parameters:
+            lang (str): Language code whose model has been loaded and should be used to create the recognizer.
+        """
         model_path = self.models[lang]
         self.engines[lang] = KaldiRecognizer(KaldiModel(model_path), self.sample_rate)
 
     def load_model(self, model_path, lang):
+        """
+        Load a Kaldi model for the given language and initialize its recognizer.
+        
+        The language code is normalized to its base (e.g., "en-US" -> "en") and stored with the model path.
+        If a valid model_path is provided, a KaldiRecognizer is created for that language using the instance's sample_rate.
+        Raises FileNotFoundError if model_path is not provided or falsy.
+        
+        Parameters:
+            model_path (str): Filesystem path to the Kaldi model directory.
+            lang (str): Language code; only the primary subtag (before '-') is used.
+        """
         lang = lang.split("-")[0].lower()
         self.models[lang] = model_path
         if model_path:
@@ -128,6 +185,14 @@ class ModelContainer:
 
     @staticmethod
     def download_model(url):
+        """
+        Ensure a Vosk model is present locally by downloading and extracting it to the user's XDG data directory if it does not already exist.
+        
+        If the model archive is not present, this function waits for HTTP connectivity, downloads the archive (supports .zip and tar formats), and extracts it to XDG_DATA_HOME/vosk/<model_name>.
+        
+        Returns:
+            model_path (str): Filesystem path to the extracted local model directory under XDG_DATA_HOME/vosk.
+        """
         folder = join(xdg_data_home(), 'vosk')
         name = url.split("/")[-1].rsplit(".", 1)[0]
         model_path = join(folder, name)
@@ -148,6 +213,18 @@ class ModelContainer:
 
     @staticmethod
     def lang2modelurl(lang: str):
+        """
+        Resolve a language code to the corresponding Vosk model download URL.
+        
+        Parameters:
+        	lang (str): Language code (e.g., "en" or "en-US"); regional variants are normalized to their base language.
+        
+        Returns:
+        	model_url (str): The full download URL for the model corresponding to the resolved language.
+        
+        Raises:
+        	ValueError: If the language is not supported.
+        """
         lang_norm = lang.lower()
         lang_norm = lang_norm if lang_norm in LANG2MODEL else lang_norm.split("-")[0]
         model_id = LANG2MODEL.get(lang_norm)
@@ -158,6 +235,14 @@ class ModelContainer:
 
 class VoskKaldiSTT(STT):
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the Vosk STT instance and prepare its model container.
+        
+        Creates a ModelContainer, determines which model to use from configuration (supports legacy `model_folder` and `model` keys), and ensures a recognizer is loaded. If a model id is configured it is resolved to a URL when recognized as a known identifier, downloaded when it is an HTTP URL, and then loaded from the local path. If no model is configured, loads the default model for the instance language. Sets the instance to verbose mode.
+        
+        Raises:
+            ValueError: If a configured model identifier/path cannot be resolved to an existing local model.
+        """
         super().__init__(*args, **kwargs)
         # model_folder for backwards compat
         model_id = self.config.get("model_folder") or self.config.get("model")
@@ -183,15 +268,21 @@ class VoskKaldiSTT(STT):
 
     @classproperty
     def available_languages(cls) -> set:
-        """Return languages supported by this TTS implementation in this state
-        This property should be overridden by the derived class to advertise
-        what languages that engine supports.
+        """
+        Return the set of language codes supported by this STT implementation.
+        
         Returns:
-            set: supported languages
+            set: Supported language codes (the keys from LANG2MODEL).
         """
         return set(LANG2MODEL.keys())
 
     def load_language(self, lang):
+        """
+        Ensure the speech recognition model for the specified language is downloaded and initialized.
+        
+        Parameters:
+            lang (str): Language identifier or code (e.g., "en", "fr") to load.
+        """
         self.model.load_language(lang)
 
     def unload_language(self, lang):
@@ -201,9 +292,25 @@ class VoskKaldiSTT(STT):
         self.model.enable_limited_vocabulary(words, lang or self.lang)
 
     def enable_full_vocabulary(self, lang=None):
+        """
+        Enable the full vocabulary recognizer for the given language or the instance's current language.
+        
+        Parameters:
+            lang (str | None): Optional language code to enable; if omitted, uses the instance's configured language.
+        """
         self.model.enable_full_vocabulary(lang or self.lang)
 
     def execute(self, audio: AudioData, language: Optional[str] = None):
+        """
+        Transcribes the provided audio using the configured model and language.
+        
+        Parameters:
+            audio (AudioData): Audio input to be processed.
+            language (Optional[str]): Language code to use for transcription; if omitted, the instance's current language is used.
+        
+        Returns:
+            transcription (str): Final recognized text for the processed audio.
+        """
         lang = language or self.lang
         self.model.process_audio(audio, lang)
         return self.model.get_final_transcription(lang)
@@ -333,14 +440,17 @@ def download_extract_tar(tar_url, folder, tar_filename='',
 def download_extract_zip(zip_url, folder, zip_filename="",
                          skill_folder_name=None, session=None):
     """
-   Download and extract the zip at the url to the given folder
-
-   Args:
-       zip_url (str): URL of zip file to download
-       folder (str): Location of parent directory to extract to. Doesn't have to exist
-       zip_filename (str): Location to download zip. Default is to a temp file
-       skill_folder_name (str): rename extracted skill folder to this
-   """
+                         Download a ZIP archive from a URL and extract its contents into a target folder.
+                         
+                         If zip_filename is provided, download into that path; otherwise a temporary file is used.
+                         The target folder is created if it does not exist. If skill_folder_name is set,
+                         the function renames the extracted archive's top-level directory to that name.
+                         Parameters:
+                             zip_url (str): URL of the ZIP file to download.
+                             folder (str): Directory to extract archive contents into; will be created if missing.
+                             zip_filename (str): Path to save the downloaded ZIP. If empty, a temporary file is used.
+                             skill_folder_name (str): If provided, rename the extracted top-level folder to this name.
+                         """
     try:
         makedirs(folder)
     except OSError:
