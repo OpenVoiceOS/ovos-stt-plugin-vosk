@@ -7,6 +7,7 @@ Tests:
 Fixture: test/fixtures/command.wav — 16 kHz mono, speech "what time is it in london"
 The Vosk small-en model is downloaded once and cached under XDG_DATA_HOME/vosk.
 """
+import importlib.util
 import os
 from pathlib import Path
 
@@ -20,6 +21,14 @@ from ovos_stt_plugin_vosk import VoskKaldiSTT
 from ovoscope.listener import get_mini_listener
 
 FIXTURE = Path(__file__).parent / "fixtures" / "command.wav"
+
+# The MiniListener pipeline needs ovos-dinkum-listener at runtime; skip the
+# pipeline test where it is unavailable (the dedicated ovoscope workflow
+# installs the test extras and exercises it for real).
+requires_dinkum = pytest.mark.skipif(
+    importlib.util.find_spec("ovos_dinkum_listener") is None,
+    reason="ovos-dinkum-listener not installed",
+)
 
 # Expected tokens from "what time is it in london"
 EXPECTED_TOKENS = {"what", "time", "is", "it", "in", "london"}
@@ -54,6 +63,7 @@ def test_direct_transcription(stt, audio_data):
     print(f"\n[vosk transcript] {transcript!r}  (matched tokens: {matched})")
 
 
+@requires_dinkum
 def test_listener_pipeline(stt):
     """get_mini_listener() feeds the fixture WAV and emits recognizer_loop:utterance."""
     listener = get_mini_listener(stt_instance=stt)
