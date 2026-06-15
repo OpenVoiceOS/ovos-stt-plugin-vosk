@@ -9,3 +9,7 @@ jobs:
   license_check:
     uses: OpenVoiceOS/gh-automations/.github/workflows/license-check.yml@dev
     secrets: inherit
+    with:
+      # tqdm reports as "MPL-2.0 AND MIT"; MPL-2.0 is file-level copyleft and is
+      # safe to consume as a library. Allow the long name and the SPDX id.
+      exclude_licenses: '(^Mozilla Public License.*|.*MPL-2\.0.*)'
