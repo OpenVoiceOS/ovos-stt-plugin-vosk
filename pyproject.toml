@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-stt-plugin-vosk"
+dynamic = ["version"]
+description = "A vosk stt plugin for OpenVoiceOS"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "JarbasAi", email = "jarbasai@mailfence.com"}
+]
+keywords = ["mycroft", "ovos", "plugin", "stt"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    "ovos-plugin-manager>=2.1.1,<3.0.0",
+    "ovos-utils>=0.8.4,<1.0.0",
+    "vosk",
+]
+
+[project.optional-dependencies]
+test = [
+    "ovoscope>=0.13.1",
+    "ovos-dinkum-listener",
+    "pytest>=7.0.0",
+    "pytest-timeout>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk"
+
+[project.entry-points."opm.stt"]
+"ovos-stt-plugin-vosk" = "ovos_stt_plugin_vosk:VoskKaldiSTT"
+"ovos-stt-plugin-vosk-streaming" = "ovos_stt_plugin_vosk:VoskKaldiStreamingSTT"
+
+[project.entry-points."opm.stt.config"]
+"ovos-stt-plugin-vosk.config" = "ovos_stt_plugin_vosk:VoskSTTConfig"
+"ovos-stt-plugin-vosk-streaming.config" = "ovos_stt_plugin_vosk:VoskSTTConfig"
+
+[tool.setuptools.dynamic]
+version = {attr = "ovos_stt_plugin_vosk.version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ovos_stt_plugin_vosk*"]
