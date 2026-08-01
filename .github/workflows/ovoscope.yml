@@ -1,0 +1,15 @@
+name: STT End-to-End Tests (ovoscope)
+
+on:
+  pull_request:
+    branches: [dev, master, main]
+  workflow_dispatch:
+
+jobs:
+  ovoscope:
+    uses: OpenVoiceOS/gh-automations/.github/workflows/ovoscope.yml@dev
+    secrets: inherit
+    with:
+      python_version: '3.11'
+      install_extras: 'test'
+      test_path: 'test/end2end/'

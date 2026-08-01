@@ -1,68 +1,20 @@
 # Changelog
 
-## [0.2.7a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.7a3) (2026-01-09)
+## [0.2.8a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.8a2) (2026-08-01)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.7a1...0.2.7a3)
-
-**Closed issues:**
-
-- drop dependency on deprecated ovos\_skill\_installer [\#15](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/issues/15)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.8a1...0.2.8a2)
 
 **Merged pull requests:**
 
-- chore\(deps\): update actions/checkout action to v6 [\#25](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/25) ([renovate[bot]](https://github.com/apps/renovate))
+- docs: rewrite README in Simplified Technical English [\#40](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/40) ([JarbasAl](https://github.com/JarbasAl))
 
-## [0.2.7a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.7a1) (2026-01-09)
+## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.8a1) (2026-06-15)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a6...0.2.7a1)
-
-**Merged pull requests:**
-
-- fix: automations [\#32](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/32) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.2.6a6](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a6) (2026-01-09)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a5...0.2.6a6)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.7...0.2.8a1)
 
 **Merged pull requests:**
 
-- refactor: latest opm, drop speech\_recognition, allow model\_id [\#30](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/30) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.2.6a5](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a5) (2026-01-09)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a4...0.2.6a5)
-
-**Merged pull requests:**
-
-- refactor: modernize/drop speech\_recognition [\#29](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/29) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.2.6a4](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a4) (2025-12-19)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a3...0.2.6a4)
-
-**Merged pull requests:**
-
-- chore\(deps\): update actions/setup-python action to v6 [\#28](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/28) ([renovate[bot]](https://github.com/apps/renovate))
-
-## [0.2.6a3](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a3) (2025-12-19)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a2...0.2.6a3)
-
-**Merged pull requests:**
-
-- chore\(deps\): update dependency python to 3.14 [\#24](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/24) ([renovate[bot]](https://github.com/apps/renovate))
-
-## [0.2.6a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a2) (2025-12-18)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.6a1...0.2.6a2)
-
-**Merged pull requests:**
-
-- chore: Configure Renovate [\#22](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/22) ([renovate[bot]](https://github.com/apps/renovate))
-
-## [0.2.6a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.6a1) (2025-11-22)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.5...0.2.6a1)
+- test: ovoscope listener e2e \(real vosk STT transcription\) [\#37](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/37) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
