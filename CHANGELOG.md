@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8a2](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.8a2) (2026-08-01)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.8a1...0.2.8a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#40](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/pull/40) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.8a1](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/tree/0.2.8a1) (2026-06-15)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-stt-plugin-vosk/compare/0.2.7...0.2.8a1)
